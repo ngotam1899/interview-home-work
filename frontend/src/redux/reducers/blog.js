@@ -2,7 +2,8 @@ import { BlogActionTypes } from "../actions/blog";
 
 const init = {
   list: [],
-  comments: []
+  comments: [],
+  detail: {}
 };
 
 
@@ -33,6 +34,19 @@ export default function(state = init, action) {
       return {
         ...state,
         comments: action.payload || []
+      };
+    case BlogActionTypes.GET_DETAIL:
+      return {
+        ...state,
+      };
+    case BlogActionTypes.GET_DETAIL_ERROR:
+      return {
+        ...state,
+      };
+    case BlogActionTypes.GET_DETAIL_SUCCESS:
+      return {
+        ...state,
+        detail: action.payload
       };
     default:
       return state;

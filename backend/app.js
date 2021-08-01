@@ -3,8 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
+
 // 1.1. Import Routers
 const post = require('./routes/post');
+const user = require('./routes/user');
+const comment = require('./routes/comment');
 
 mongoose.connect('mongodb://localhost/ZIGVY_Interview', {
 	useCreateIndex: true,
@@ -34,6 +37,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // 6. Routes
 app.use('/posts', post);
+app.use('/users', user);
+app.use('/comments', comment);
+
 
 // 9. Catch 404 error and forward them to error handler
 app.use((req, res, next) => {

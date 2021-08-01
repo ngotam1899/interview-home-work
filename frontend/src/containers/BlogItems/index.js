@@ -3,9 +3,8 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 // @Actions
 import BlogActions from "../../redux/actions/blog";
+// @Components
 import CommentArea from '../CommentArea';
-// @containers
-
 
 class BlogItems extends Component {
   randomDate(start, end) {
@@ -13,8 +12,19 @@ class BlogItems extends Component {
   } 
 
   getComment = (id) => {
-    const {onGetCommentByBlog} = this.props;
+    const { onGetCommentByBlog } = this.props;
     onGetCommentByBlog(id);
+  }
+
+  setUserName = (id) => {
+    const { listUser } = this.props;
+    const user = listUser.find(obj => obj.id === id);
+    return user.name;
+  }
+
+  redirect = (id) =>{
+    const { history } = this.props;
+    history.push(`/blogs/${id}`)
   }
 
   render() {
@@ -22,9 +32,10 @@ class BlogItems extends Component {
     return (
       <div className="rounded border p-4 my-3 shadow">
         <h3>{blog.title}</h3>
-        <p className="smaller">Author: <span className="fw-bold">{blog.userId}</span></p>
+        <p className="smaller">Author: <span className="fw-bold">{this.setUserName(blog.userId)}</span></p>
         <p className="smaller">Created date: {this.randomDate(new Date(2012, 0, 1), new Date()).toString()}<span className="fw-bold"></span></p>
-        <p className="my-2">{blog.body.substring(0,100)} ...</p>
+        <p className="my-2">{blog.body.substring(0,100)} ... <span><button type="button" className="btn bg-light border-primary"
+        onClick={()=> this.redirect(blog.id)}>Xem thêm</button></span></p>
         <button className="rounded-pill border-primary btn bg-light" type="button" onClick={() => this.getComment(blog.id)}>Comments</button>
         {listComment && listComment.length > 0 && listComment[0].postId === blog.id && 
           <CommentArea comment={listComment}/>

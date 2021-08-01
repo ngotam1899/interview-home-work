@@ -17,8 +17,8 @@ const getAllPost = async (req, res, next) => {
 				page = number_page;
 			}
     }
-    if (req.query.keyword != undefined && req.query.keyword != '') {
-			let keyword = req.query.keyword.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    if (req.query.title != undefined && req.query.title != '') {
+			let keyword = req.query.title.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
 			condition.title = {$regex: '.*' + keyword.trim() + '.*', $options: 'i'};
 		}
     const total = await Post.countDocuments(condition);
@@ -32,6 +32,19 @@ const getAllPost = async (req, res, next) => {
 	}
 };
 
+const getDetailPost = async (req, res, next) => {
+  try {
+    const { IDPost } = req.params;
+		const post = await Post.findById(IDPost).populate({path: 'user', select: 'name'})
+		return res.status(200).json({ success: true, code: 200, message: '', data: post });
+  } 
+  catch(error) {
+    return next(error)
+  }
+};
+
 module.exports = {
 	getAllPost,
+	getDetailPost,
+	
 };

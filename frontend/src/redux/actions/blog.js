@@ -6,6 +6,10 @@ export const BlogActionTypes = {
   GET_COMMENT: "GET_COMMENT",
   GET_COMMENT_SUCCESS: "GET_COMMENT_SUCCESS",
   GET_COMMENT_ERROR: "GET_COMMENT_ERROR",
+
+  GET_DETAIL: "GET_DETAIL",
+  GET_DETAIL_SUCCESS: "GET_DETAIL_SUCCESS",
+  GET_DETAIL_ERROR: "GET_DETAIL_ERROR",
 };
 
 Object.keys(BlogActionTypes).forEach((key) => {
@@ -44,6 +48,21 @@ const onGetCommentError = (error) => ({
   payload: error,
 });
 
+const onGetDetail = (payload) => ({
+  type: BlogActionTypes.GET_DETAIL,
+  payload,
+});
+
+const onGetDetailSuccess = (payload) => ({
+  type: BlogActionTypes.GET_DETAIL_SUCCESS,
+  payload,
+});
+
+const onGetDetailError = (error) => ({
+  type: BlogActionTypes.GET_DETAIL_ERROR,
+  payload: error,
+});
+
 const BlogActions = {
   onGetList,
   onGetListSuccess,
@@ -52,6 +71,10 @@ const BlogActions = {
   onGetComment,
   onGetCommentSuccess,
   onGetCommentError,
+
+  onGetDetail,
+  onGetDetailSuccess,
+  onGetDetailError,
 };
 
 export default BlogActions;
